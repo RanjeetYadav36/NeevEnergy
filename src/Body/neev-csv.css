@@ -1,0 +1,30 @@
+.neevCsvCard {
+    padding-top: 10px;
+}
+
+.neevCsv{
+    padding-top: 10px;
+
+}
+
+.districtNameBox{
+    font-family: serif;
+    font-size: 16px;
+}
+
+.submitBtn{ 
+    padding-top: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.submit{
+    background-color: rgb(24, 160, 251);
+    padding: 0px 32px;
+    color: white !important;
+    text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+
+}

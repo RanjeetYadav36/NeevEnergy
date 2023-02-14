@@ -1,0 +1,49 @@
+.headerList{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    }
+    
+    .headerList > li {
+      padding: 10px;
+    }
+    
+    .logo{
+      width : 15%;
+    }
+    
+    
+    .App-header{
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid #959595;
+      border-radius: 5px;
+    }
+    
+    .card{
+      width: 20%;
+      border: 1px solid black;
+    }
+    
+    .card > h2 {
+      font-size: 16px;
+    }
+    
+    .card > h3 {
+      font-size: 14px;
+    }
+    
+    .card > h4 {
+      font-size: 12px;
+    }
+    
+    .cardImg{
+      width: 100px;
+    }
+
+    .active{
+        color:brown;
+    }
+    
+    
+    
