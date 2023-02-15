@@ -1,13 +1,33 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Card, Row, Col, Button} from 'antd';
 import { Select } from 'antd';
 import "./neev-csv.css"
 import {NavLink} from "react-router-dom"
 import {Header} from "../header"
+import axios from "axios"
+import { FakeData } from "./fake-data";
 
 
 export const NeevCsv = ()=> {
-  return(       
+  const [districtName, setDistrictName] = useState([])
+    
+
+useEffect(()=>{
+axios.get("https://bc89-122-160-136-226.in.ngrok.io/api/csv/csvDistrict/{Districtname}").then((res)=>
+console.log("dataaaa",res)
+)
+},[])
+
+  const onDistrictChange = (value)=>{
+    setDistrictName({
+      ...districtName,
+      ["district"] : value,
+    });
+  }
+
+  return(  
+    
+
 
     
 
@@ -26,9 +46,19 @@ export const NeevCsv = ()=> {
         <Col span={6}>
         <p className="districtNameBox">District Name</p>
 <Select
+     labelSubName= "District Name"
+     placeholder="select"
+     name="districtName"
+     rules={[
+      {
+          required: true,
+          message: "Please enter your District Name",
+      },
+  ]}
+
     //   defaultValue="lucy"
       style={{ width: 120 }}
-    //   onChange={handleChange}
+      onChange={onDistrictChange}
       options={[
         { value: 'Khorda', label: 'Khorda' },
         { value: 'Ganjam', label: 'Ganjam' },
