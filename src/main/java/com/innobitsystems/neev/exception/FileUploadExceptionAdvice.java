@@ -1,9 +1,9 @@
-package com.bezkoder.spring.files.csv.exception;
+package com.innobitsystems.neev.exception;
 
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.bezkoder.spring.files.csv.message.ResponseMessage;
+import com.innobitsystems.neev.message.ResponseMessage;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
