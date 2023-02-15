@@ -9,20 +9,54 @@ import { FakeData } from "./fake-data";
 
 
 export const NeevCsv = ()=> {
-  const [districtName, setDistrictName] = useState([])
+  const [districtValue, setDistrictValue] = useState([])
+  const [districtID, setDistrictID] = useState([])
     
 
 useEffect(()=>{
-axios.get("https://bc89-122-160-136-226.in.ngrok.io/api/csv/csvDistrict/{Districtname}").then((res)=>
-console.log("dataaaa",res)
+axios.get("http://192.168.1.84:8080/api/csv/csvall").then((res)=>
+console.log("dataaaa",res.data)
 )
 },[])
 
+
+
   const onDistrictChange = (value)=>{
-    setDistrictName({
-      ...districtName,
+    setDistrictValue({
+      ...districtValue,
       ["district"] : value,
     });
+  }
+
+  const onDistrictName =()=>{
+    return(
+<Select
+     labelSubName= "District Name"
+     placeholder="select"
+     name="districtName"
+     rules={[
+      {
+          required: true,
+          message: "Please enter your District Name",
+      },
+  ]}
+
+      value ={onDistrictName?.districtName}
+      style={{ width: 120 }}
+      onChange={onDistrictChan
+
+      {districtID.map((districtName, i) => {
+        return (
+            <option value={districtName}>{districtName}</option>
+        )
+    })}
+      // options={[
+      //   { value: 'Khorda', label: 'Khorda' },
+      //   { value: 'Ganjam', label: 'Ganjam' },
+      //   { value: 'Cuttack', label: 'Cuttack' },
+      // ]}
+    />
+    )
   }
 
   return(  
@@ -45,7 +79,8 @@ console.log("dataaaa",res)
     <Row>
         <Col span={6}>
         <p className="districtNameBox">District Name</p>
-<Select
+        {onDistrictName}
+{/* <Select
      labelSubName= "District Name"
      placeholder="select"
      name="districtName"
@@ -64,7 +99,7 @@ console.log("dataaaa",res)
         { value: 'Ganjam', label: 'Ganjam' },
         { value: 'Cuttack', label: 'Cuttack' },
       ]}
-    />
+    /> */}
         </Col>
         <Col span={6}>
         <p className="districtNameBox">Block Name</p>
