@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.innobitsystems.neev.message.ResponseMessage;
@@ -26,8 +27,8 @@ import com.innobitsystems.neev.helper.CSVHelper;
 
 
 
-
-@Controller
+@CrossOrigin
+@RestController
 @RequestMapping("/api/csv")
 public class CSVController {
 
@@ -59,7 +60,7 @@ public class CSVController {
 	 public ResponseEntity<Object> getAllMessage() throws Exception{
 		 
 		try {
-
+System.out.println("jkkkkkkkkkkkkkkkkkkk");
 List<CsvUploadModel> str =  fileService.getAllData();
 return new ResponseEntity<>(str, HttpStatus.OK);
 			
@@ -74,7 +75,8 @@ return new ResponseEntity<>(str, HttpStatus.OK);
 	
 	@GetMapping("/csvDistrict/{district}")
 	 public ResponseEntity<Object> getByDistrict(@PathVariable(value = "district")String district) throws Exception{
-		 
+		System.out.println("jkkkkkkkkkkkkkkkkkkk");
+
 		try {
 
 List<CsvUploadModel> str =  fileService.getByDistrict(district);
