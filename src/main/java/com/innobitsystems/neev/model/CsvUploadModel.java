@@ -22,7 +22,7 @@ public class CsvUploadModel {
 	 @Override
 	public String toString() {
 		return "CsvUploadModel [id=" + id + ", userid=" + userid + ", uploadedtime=" + uploadedtime + ", districtName="
-				+ districtName + ", blockName=" + blockName + ", gpName=" + gpName + ", clusterName=" + clusterName
+				+ districtName + ", blockName=" + block + ", gpName=" + gpName + ", clusterName=" + clusterName
 				+ ", wardNumber=" + wardNumber + ", gpsCordinateOfpole=" + gpsCordinateOfpole + ", poleNumber="
 				+ poleNumber + ", lightInWattage=" + lightInWattage + ", lightimage=" + lightimage
 				+ ", reconductoringStartPoleNo=" + reconductoringStartPoleNo + "]";
@@ -45,7 +45,7 @@ public class CsvUploadModel {
 		this.userid = userid;
 		this.uploadedtime = uploadedtime;
 		this.districtName = districtName;
-		this.blockName = blockName;
+		this.block = blockName;
 		this.gpName = gpName;
 		this.clusterName = clusterName;
 		this.wardNumber = wardNumber;
@@ -77,11 +77,11 @@ public class CsvUploadModel {
 	}
 
 	public String getBlockName() {
-		return blockName;
+		return block;
 	}
 
 	public void setBlockName(String blockName) {
-		this.blockName = blockName;
+		this.block = blockName;
 	}
 
 	public String getGpName() {
@@ -157,7 +157,7 @@ public class CsvUploadModel {
 
   
   @Column(name = "block_name")
-  private String blockName;
+  private String block;
   
   @Column(name = "gp_name")
   private String gpName;

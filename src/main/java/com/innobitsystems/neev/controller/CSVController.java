@@ -1,5 +1,6 @@
 package com.innobitsystems.neev.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,96 +26,102 @@ import com.innobitsystems.neev.service.*;
 import com.innobitsystems.neev.exception.*;
 import com.innobitsystems.neev.helper.CSVHelper;
 
-
-
 @CrossOrigin
 @RestController
 @RequestMapping("/api/csv")
 public class CSVController {
 
-  @Autowired
-  CSVService fileService;
+	@Autowired
+	CSVService fileService;
 
-  @PostMapping("/upload")
-  public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
-    String message = "";
+	@PostMapping("/upload")
+	public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+		String message = "";
 
-    if (CSVHelper.hasCSVFormat(file)) {
-      try {
-        fileService.save(file);
+		if (CSVHelper.hasCSVFormat(file)) {
+			try {
+				fileService.save(file);
 
-        message = "Uploaded the file successfully: " + file.getOriginalFilename();
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-      } catch (Exception e) {
-        message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-      }
-    }
+				message = "Uploaded the file successfully: " + file.getOriginalFilename();
+				return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+			} catch (Exception e) {
+				message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+				return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+			}
+		}
 
-    message = "Please upload a csv file!";
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
-  }
+		message = "Please upload a csv file!";
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+	}
 
-  
 	@GetMapping("/csvall")
-	 public ResponseEntity<Object> getAllMessage() throws Exception{
-		 
+	public ResponseEntity<Object> getAllMessage() throws Exception {
+
 		try {
-System.out.println("jkkkkkkkkkkkkkkkkkkk");
-List<CsvUploadModel> str =  fileService.getAllData();
-return new ResponseEntity<>(str, HttpStatus.OK);
-			
-		}catch(Exception e) {
-			
-		      return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-			
+			List<CsvUploadModel> str = fileService.getAllData();
+			return new ResponseEntity<>(str, HttpStatus.OK);
+
+		} catch (Exception e) {
+
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
 		}
-		
-	    
-	  }
-	
+
+	}
+
+	@GetMapping("/csvf/{district}/{block}/{gpName}/{cluster}")
+	public ResponseEntity<Object> getbyDistrictNameandBlock(@PathVariable(value = "district") String district,@PathVariable(value = "district") String block,@PathVariable(value = "district") String gpName,@PathVariable(value = "district") String cluster) throws Exception {
+
+		try {
+			HashMap<String, Object> str = fileService.getAllDataAndBlock(district, block,gpName,cluster);
+			return new ResponseEntity<>(str, HttpStatus.OK);
+
+		} catch (Exception e) {
+
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+
+	}
+
 	@GetMapping("/csvDistrict/{district}")
-	 public ResponseEntity<Object> getByDistrict(@PathVariable(value = "district")String district) throws Exception{
-		System.out.println("jkkkkkkkkkkkkkkkkkkk");
+	public ResponseEntity<Object> getByDistrict(@PathVariable(value = "district") String district) throws Exception {
 
 		try {
 
-List<CsvUploadModel> str =  fileService.getByDistrict(district);
-return new ResponseEntity<>(str, HttpStatus.OK);
-			
-		}catch(Exception e) {
-			
-		      return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-			
+			List<CsvUploadModel> str = fileService.getByDistrict(district);
+			return new ResponseEntity<>(str, HttpStatus.OK);
+
+		} catch (Exception e) {
+
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
 		}
-		
-	    
-	  }
-  
-  @GetMapping("/tutorials")
-  public ResponseEntity<List<CsvUploadModel>> getAllTutorials() {
-    try {
-      List<CsvUploadModel> tutorials = fileService.getAllTutorials();
 
-      if (tutorials.isEmpty()) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
+	}
 
-      return new ResponseEntity<>(tutorials, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
+	@GetMapping("/tutorials")
+	public ResponseEntity<List<CsvUploadModel>> getAllTutorials() {
+		try {
+			List<CsvUploadModel> tutorials = fileService.getAllTutorials();
 
-  @GetMapping("/download")
-  public ResponseEntity<Resource> getFile() {
-    String filename = "tutorials.csv";
-    InputStreamResource file = new InputStreamResource(fileService.load());
+			if (tutorials.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
 
-    return ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
-        .contentType(MediaType.parseMediaType("application/csv"))
-        .body(file);
-  }
+			return new ResponseEntity<>(tutorials, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/download")
+	public ResponseEntity<Resource> getFile() {
+		String filename = "tutorials.csv";
+		InputStreamResource file = new InputStreamResource(fileService.load());
+
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+				.contentType(MediaType.parseMediaType("application/csv")).body(file);
+	}
 
 }
