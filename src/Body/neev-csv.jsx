@@ -17,8 +17,7 @@ export const NeevCsv = ()=> {
   const[gpName,setGpName] = useState([])
   const[clusterName,setClusterName] = useState([])
   const printRef = useRef()
-const[img , setImg] = useState(["https://pragyaam-images.s3.ap-south-1.amazonaws.com/neev/vlYGwoP5/images/d00be3d0-72fe-4a15-9475-fdf796cf1e28_914e271fc9adc8a20a78c64cdf4f3013.jpg",
-"https://pragyaam-images.s3.ap-south-1.amazonaws.com/neev/vlYGwoP5/images/9de2a009-17ac-4df5-939f-bbcf59c55801_67a6c4d19a2ebc793e7179a90be445bc.jpg,https://pragyaam-images.s3.ap-south-1.amazonaws.com/neev/vlYGwoP5/images/9de2a009-17ac-4df5-939f-bbcf59c55801_67a6c4d19a2ebc793e7179a90be445bc.jpg"])
+const[img , setImg] = useState([])
   const [districtValue, setDistrictValue] = useState("")
   const [blockNameValue, setBlockNameValue] = useState("")
   const[gpValue , setGpValue] = useState("")
@@ -160,10 +159,10 @@ useEffect(()=>{
 
 
 
-const city = 'Cuttack';
-const block1 = 'Tigiria';
-const district = null;
-const village = 'Tigiria Nazigarh,Gp-Nizigarh';
+const city = districtValue;
+const block1 = blockNameValue;
+const district = gpName;
+const village = clusterNameValue;
 console.log(village,"village")
 const rework = village.replace("%20"," ")
 console.log(rework,"rework")
@@ -171,13 +170,14 @@ console.log(rework,"rework")
 
 // const url = `http://localhost:8080/api/csvf/${encodeURIComponent(city)}/${encodeURIComponent(block)}/${encodeURIComponent(district)}/${encodeURIComponent(village)}`;
 
-const url = `http://localhost:8080/api/csv/csvf/${city}/${block1}/${district}/${rework.replace("%20"," ")}`;
+const url = `http://localhost:8080/api/csv/csvf/${city}/${block1}/${district}/${village}`;
 console.log(url,"url")
 
 const handleSubmit =()=>{
 axios.get(url)
-  .then(response => {
-    console.log(response.data);
+  .then(res => {
+        setImg(res.data.lighimage)
+    console.log(res.data.lighimage);
   })
   .catch(error => {
     console.log(error);
@@ -225,15 +225,15 @@ const onClusterChange = (event)=>{
 const imagePrint = ()=>{
   return(
     // <Card>
-    <>
-    <Col span={6}>
+    <div >
+    <Col span={12}  className="displayimg">
     {img.map((img)=>{
             return(
-            <img src={img} style={{height:"200px" , width:"200px"}} />
+            <img src={img} style={{height:"400px" , width:"400px"}} />
             )
           })}
     </Col>
-    </>
+    </div>
   )
 }
 
@@ -246,7 +246,8 @@ console.log(districtValue,"fefefefe")
       <select
       // onChange={(value)=>setDistrictValue(value)
       onChange ={onChange}
-        
+      style={{ width: 120, height:30 }}
+
       defaultValue =""
       name ="districtName"
       >
@@ -341,11 +342,12 @@ console.log(districtValue,"fefefefe")
     
         </Col>
         <Col span={6}>
-        <p className="districtNameBox">Block Name</p>
+        <p  className="districtNameBox">Block Name</p>
         <select
       // onChange={(value)=>setDistrictValue(value)
       onChange ={onBlockChange}
-        
+      style={{ width: 120, height:50 }}
+
       defaultValue = ""
       name ="blockName"
       >
@@ -375,6 +377,8 @@ console.log(districtValue,"fefefefe")
         <Col span={6}>
         <p className="districtNameBox">GP Name</p>
         <select
+         style={{ width: 120, height:30 }}
+
       // onChange={(value)=>setDistrictValue(value)
       onChange ={onGpChange}
         
@@ -408,7 +412,8 @@ console.log(districtValue,"fefefefe")
         <select
       // onChange={(value)=>setDistrictValue(value)
       onChange ={onClusterChange}
-        
+      style={{ width: 120, height:30 }}
+
       defaultValue = ""
       name ="clusterName"
       >

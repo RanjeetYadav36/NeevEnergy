@@ -6,6 +6,17 @@
     padding-top: 10px;
 
 }
+.displayimg{
+    /* display: flex;   */
+    display: contents;
+    marginn : 10px
+
+}
+
+/* .print-only{
+    display: flex;
+    display: contents;
+} */
 
 .clusterValue{
     text-align: center;
