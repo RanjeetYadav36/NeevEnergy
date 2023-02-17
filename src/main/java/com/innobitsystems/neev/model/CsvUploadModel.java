@@ -19,15 +19,7 @@ public class CsvUploadModel {
 	 @Column(name = "userid")
 	  private String userid;
 
-	 @Override
-	public String toString() {
-		return "CsvUploadModel [id=" + id + ", userid=" + userid + ", uploadedtime=" + uploadedtime + ", districtName="
-				+ districtName + ", blockName=" + block + ", gpName=" + gpName + ", clusterName=" + clusterName
-				+ ", wardNumber=" + wardNumber + ", gpsCordinateOfpole=" + gpsCordinateOfpole + ", poleNumber="
-				+ poleNumber + ", lightInWattage=" + lightInWattage + ", lightimage=" + lightimage
-				+ ", reconductoringStartPoleNo=" + reconductoringStartPoleNo + "]";
-	}
-
+	
 	public String getUserid() {
 		return userid;
 	}
@@ -37,15 +29,16 @@ public class CsvUploadModel {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CsvUploadModel(Long id, String userid, String uploadedtime, String districtName, String blockName,
-			String gpName, String clusterName, String wardNumber, String gpsCordinateOfpole, String poleNumber,
-			String lightInWattage, String lightimage, String reconductoringStartPoleNo) {
-		super();
+
+	public CsvUploadModel(Long id, String userid, String uploadedtime, String districtName, String block, String gpName,
+			String clusterName, String wardNumber, String gpsCordinateOfpole, String poleNumber, String lightInWattage,
+			String lightimage, String reconductoringStartPoleNo, String reconductoringEndPoleNo, String spanLength,
+			String landmark) {
 		this.id = id;
 		this.userid = userid;
 		this.uploadedtime = uploadedtime;
 		this.districtName = districtName;
-		this.block = blockName;
+		this.block = block;
 		this.gpName = gpName;
 		this.clusterName = clusterName;
 		this.wardNumber = wardNumber;
@@ -54,6 +47,51 @@ public class CsvUploadModel {
 		this.lightInWattage = lightInWattage;
 		this.lightimage = lightimage;
 		this.reconductoringStartPoleNo = reconductoringStartPoleNo;
+		this.reconductoringEndPoleNo = reconductoringEndPoleNo;
+		this.spanLength = spanLength;
+		this.landmark = landmark;
+	}
+
+	@Override
+	public String toString() {
+		return "CsvUploadModel [id=" + id + ", userid=" + userid + ", uploadedtime=" + uploadedtime + ", districtName="
+				+ districtName + ", block=" + block + ", gpName=" + gpName + ", clusterName=" + clusterName
+				+ ", wardNumber=" + wardNumber + ", gpsCordinateOfpole=" + gpsCordinateOfpole + ", poleNumber="
+				+ poleNumber + ", lightInWattage=" + lightInWattage + ", lightimage=" + lightimage
+				+ ", reconductoringStartPoleNo=" + reconductoringStartPoleNo + ", reconductoringEndPoleNo="
+				+ reconductoringEndPoleNo + ", spanLength=" + spanLength + ", landmark=" + landmark + "]";
+	}
+
+	public String getBlock() {
+		return block;
+	}
+
+	public void setBlock(String block) {
+		this.block = block;
+	}
+
+	public String getReconductoringEndPoleNo() {
+		return reconductoringEndPoleNo;
+	}
+
+	public void setReconductoringEndPoleNo(String reconductoringEndPoleNo) {
+		this.reconductoringEndPoleNo = reconductoringEndPoleNo;
+	}
+
+	public String getSpanLength() {
+		return spanLength;
+	}
+
+	public void setSpanLength(String spanLength) {
+		this.spanLength = spanLength;
+	}
+
+	public String getLandmark() {
+		return landmark;
+	}
+
+	public void setLandmark(String landmark) {
+		this.landmark = landmark;
 	}
 
 	public void setUserid(String userid) {
@@ -168,7 +206,7 @@ public class CsvUploadModel {
   @Column(name = "ward_number")
   private String wardNumber;
   
-  @Column(name = "gps_coordinates_of_pole")
+  @Column(name = "gps_coordinates_of_each_poles")
   private String gpsCordinateOfpole;
   
   @Column(name = "pole_no")
@@ -183,6 +221,18 @@ public class CsvUploadModel {
   
   @Column(name = "reconductoring_start_pole_no")
   private String reconductoringStartPoleNo;
+  
+  
+  @Column(name = "reconductoring_end_pole_no")
+  private String reconductoringEndPoleNo;
+  
+  @Column(name = "span_length")
+  private String spanLength;
+  
+  @Column(name = "landmark")
+  private String landmark;
+  
+  
   
   
   public Long getId() {

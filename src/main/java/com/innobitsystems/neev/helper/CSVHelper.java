@@ -46,6 +46,22 @@ public class CSVHelper {
       for (CSVRecord csvRecord : csvRecords) {
         CsvUploadModel tutorial = new CsvUploadModel(
         	
+//        		this.id = id;
+//        		this.userid = userid;
+//        		this.uploadedtime = uploadedtime;
+//        		this.districtName = districtName;
+//        		this.block = block;
+//        		this.gpName = gpName;
+//        		this.clusterName = clusterName;
+//        		this.wardNumber = wardNumber;
+//        		this.gpsCordinateOfpole = gpsCordinateOfpole;
+//        		this.poleNumber = poleNumber;
+//        		this.lightInWattage = lightInWattage;
+//        		this.lightimage = lightimage;
+//        		this.reconductoringStartPoleNo = reconductoringStartPoleNo;
+//        		this.reconductoringEndPoleNo = reconductoringEndPoleNo;
+//        		this.spanLength = spanLength;
+//        		this.landmark = landmark;
               Long.parseLong(csvRecord.get("Id")),
               csvRecord.get("userid"),
               csvRecord.get("uploadedtime"),
@@ -53,12 +69,15 @@ public class CSVHelper {
               csvRecord.get("blockName"),
               csvRecord.get("gpName"),
               csvRecord.get("clusterName"),
-              csvRecord.get("clusterName"),
               csvRecord.get("wardNumber"),
               csvRecord.get("gpsCordinateOfpole"),
               csvRecord.get("poleNumber"),
               csvRecord.get("lightInWattage"),
-              csvRecord.get("lightimage")
+              csvRecord.get("lightimage"),
+              csvRecord.get("reconductoringStartPoleNo"),
+              csvRecord.get("reconductoringEndPoleNo"),
+              csvRecord.get("spanLength"),
+              csvRecord.get("landmark")
               
 
 
