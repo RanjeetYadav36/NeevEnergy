@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState,useRef } from "react"
 import { Card, Row, Col, Button} from 'antd';
 import { Select } from 'antd';
 import "./neev-csv.css"
@@ -6,58 +6,288 @@ import {NavLink} from "react-router-dom"
 import {Header} from "../header"
 import axios from "axios"
 import { FakeData } from "./fake-data";
+import ReactToPrint from 'react-to-print';
+
 
 
 export const NeevCsv = ()=> {
-  const [districtValue, setDistrictValue] = useState([])
-  const [districtID, setDistrictID] = useState([])
-    
+  const [data , setdata] = useState([])
+  const [districtName, setDistrictName]=useState([])
+  const[blockName,setBlockName] = useState([])
+  const[gpName,setGpName] = useState([])
+  const[clusterName,setClusterName] = useState([])
+  const printRef = useRef()
+const[img , setImg] = useState(["https://pragyaam-images.s3.ap-south-1.amazonaws.com/neev/vlYGwoP5/images/d00be3d0-72fe-4a15-9475-fdf796cf1e28_914e271fc9adc8a20a78c64cdf4f3013.jpg",
+"https://pragyaam-images.s3.ap-south-1.amazonaws.com/neev/vlYGwoP5/images/9de2a009-17ac-4df5-939f-bbcf59c55801_67a6c4d19a2ebc793e7179a90be445bc.jpg,https://pragyaam-images.s3.ap-south-1.amazonaws.com/neev/vlYGwoP5/images/9de2a009-17ac-4df5-939f-bbcf59c55801_67a6c4d19a2ebc793e7179a90be445bc.jpg"])
+  const [districtValue, setDistrictValue] = useState("")
+  const [blockNameValue, setBlockNameValue] = useState("")
+  const[gpValue , setGpValue] = useState("")
+  const[clusterNameValue, setClusterNameValue] = useState("")
+  // const a = () =>{
+  //   const temp=data
+  //     .map((i) => i.districtName)
+  //     .filter((i, index, arr) => arr.indexOf(i) === index)
+  //     setDistrictName(temp)
+  // }
+
+
 
 useEffect(()=>{
-axios.get("http://192.168.1.84:8080/api/csv/csvall").then((res)=>
-console.log("dataaaa",res.data)
+axios.get("http://localhost:8080/api/csv/csvall").then((res)=> 
+{
+  setdata(res.data)
+  setDistrictName(res.data
+    .map((i) => i.districtName)
+    .filter((i, index, arr) => arr.indexOf(i) === index))
+    console.log(districtName,"dsd")
+// }  console.log(di,"sdsd")
+}
+
+// console.log("dataaaa",res.data)
 )
 },[])
 
 
+useEffect(()=>{
+block()
+},[districtValue])
 
-  const onDistrictChange = (value)=>{
-    setDistrictValue({
-      ...districtValue,
-      ["district"] : value,
-    });
+const block = () => {
+  if(districtValue){
+    const temp = data.filter((i, index, arr) => i.districtName == districtValue)
+console.log(temp,"53")
+ // .filter((i, index, arr) =>
+  //  console.log(i,"index") === index)
+  const temp2 = Object.values(temp)
+  console.log(temp2,"hello")
+   
+  const temp3 = temp2.map((i) => i.blockName).filter((i,index,arr) =>arr.indexOf(i) === index)
+  setBlockName(temp3)
+  console.log(temp3,"sasa")
+
+  return temp3;
+
   }
+ 
+};
+
+useEffect(()=>{
+gp()
+},[blockNameValue])
+
+const gp = ()=>{
+  console.log(blockNameValue,"abc")
+  console.log(blockName,"abcd")
+  if(blockNameValue){
+
+  const gpArea = data.filter((i,index,arr)=> i.blockName == blockNameValue)
+console.log(gpArea,"gpArea")
+  const gpArea2 = Object.values(gpArea)
+  console.log(gpArea2,"gpArea2")
+  const gpArea3 = gpArea2.map((i)=> i.gpName).filter((i,index,arr) =>arr.indexOf(i) === index)
+  console.log(gpArea3,"gpArea3")
+  setGpName(gpArea3)
+return gpArea3;
+  }
+}
+
+
+useEffect(()=>{
+  cluster()
+  },[blockNameValue])
+
+
+const cluster = ()=>{
+
+  if(blockNameValue){
+    const temp = data.filter((i, index, arr) => i.blockName == blockNameValue)
+console.log(temp,"99")
+ // .filter((i, index, arr) =>
+  //  console.log(i,"index") === index)
+  const temp2 = Object.values(temp)
+  console.log(temp2,"hello")
+   
+  const temp3 = temp2.map((i) => i.clusterName).filter((i,index,arr) =>arr.indexOf(i) === index)
+//   if(blockNameValue){
+
+//   const clusterArea = data.filter((i,index,arr)=> i.blockName = blockNameValue)
+// console.log(clusterArea,"54")
+//   const clusterArea2 = Object.value(clusterArea)
+//   const clusterArea3 = clusterArea2.map((i)=> i.clusterName).filter((i,index,arr) =>arr.indexOf(i) === index)
+
+  setClusterName(temp3)
+  return(temp3);
+  }
+}
+
+
+
+
+
+
+useEffect(()=>{
+  axios.get("http://localhost:8080/api/csv/csvall").then((res)=> 
+  {
+    setdata(res.data)
+    console.log(res.data, "dsaqw")
+    setDistrictName(res.data
+      .map((i) => i.districtName)
+      .filter((i, index, arr) => arr.indexOf(i) === index))
+      console.log(districtName,"dsd")
+  // }  console.log(di,"sdsd")
+  }
+  
+  // console.log("dataaaa",res.data)
+  )
+  },[])
+
+
+
+//   const city = 'Cuttack';
+// const block = 'Tigiria';
+// const district = null;
+// const village = 'Tigiria Nazigarh,Gp-Nizigarh';
+
+// const url = `http://localhost:8080/api/csvf/${city}/${block}/${district}/${encodeURI(village)}`;
+
+// axios.get(url)
+//   .then(response => {
+//     console.log(response.data);
+//   })
+//   .catch(error => {
+//     console.log(error);
+//   });
+
+
+
+const city = 'Cuttack';
+const block1 = 'Tigiria';
+const district = null;
+const village = 'Tigiria Nazigarh,Gp-Nizigarh';
+console.log(village,"village")
+const rework = village.replace("%20"," ")
+console.log(rework,"rework")
+  
+
+// const url = `http://localhost:8080/api/csvf/${encodeURIComponent(city)}/${encodeURIComponent(block)}/${encodeURIComponent(district)}/${encodeURIComponent(village)}`;
+
+const url = `http://localhost:8080/api/csv/csvf/${city}/${block1}/${district}/${rework.replace("%20"," ")}`;
+console.log(url,"url")
+
+const handleSubmit =()=>{
+axios.get(url)
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+}
+
+// const handleSubmit = ()=>{
+//   axios.get(URL+${encodeURIComponent(districtValue)}+"/"+blockNameValue+"/"+gpValue+"/"+clusterNameValue).then((res)=>{
+//     setImg(res.data)
+//     console.log(res.data,"0000")
+//   })
+// }
+
+
+const onChange = (event) => {
+  const value = event.target.value;
+  setDistrictValue(value);
+block()
+  
+};
+
+const onBlockChange = (event) => {
+  const value = event.target.value;
+  setBlockNameValue(value);
+  console.log(value,"123456")
+  gp()
+  cluster()
+
+};
+
+
+const onGpChange = (event)=>{
+  const value = event.target.value;
+  setGpValue(value);
+}
+
+const onClusterChange = (event)=>{
+  const value = event.target.value;
+  console.log(value,"172")
+  setClusterNameValue(value);
+}
+
+
+
+const imagePrint = ()=>{
+  return(
+    // <Card>
+    <>
+    <Col span={6}>
+    {img.map((img)=>{
+            return(
+            <img src={img} style={{height:"200px" , width:"200px"}} />
+            )
+          })}
+    </Col>
+    </>
+  )
+}
+
+
+console.log(districtValue,"fefefefe")
 
   const onDistrictName =()=>{
+    
     return(
-<Select
-     labelSubName= "District Name"
-     placeholder="select"
-     name="districtName"
-     rules={[
-      {
-          required: true,
-          message: "Please enter your District Name",
-      },
-  ]}
+      <select
+      // onChange={(value)=>setDistrictValue(value)
+      onChange ={onChange}
+        
+      defaultValue =""
+      name ="districtName"
+      >
+        <option>Select</option>
 
-      value ={onDistrictName?.districtName}
-      style={{ width: 120 }}
-      onChange={onDistrictChan
+      {districtName.map((item)=>{
+       return(
+       <option value={item}>{item}</option>
+       )
+      })}
+      </select> 
+//  <Select
+//     //  labelSubName= "District Name"
+//      placeholder="select"
+//      name="districtName"
+//       value = "xyz"
+//       style={{ width: 120 }}
+      // onChange={onDistrictChange}
 
-      {districtID.map((districtName, i) => {
-        return (
-            <option value={districtName}>{districtName}</option>
-        )
-    })}
-      // options={[
+    //   {districtName.map((item, i) => {
+    //     return (
+    //         <option value={item}>{item}</option>
+    //     )
+    // })}
+      // options={
+      //   districtName.map((item, i) => {
+      //     return (
+      //       <option value={item}>{item}</option>
+
+      //     )
+      // })
+      //   [ 
       //   { value: 'Khorda', label: 'Khorda' },
       //   { value: 'Ganjam', label: 'Ganjam' },
       //   { value: 'Cuttack', label: 'Cuttack' },
-      // ]}
-    />
+      // ]
+    // }
+    // />
     )
-  }
+  } 
+    
 
   return(  
     
@@ -67,6 +297,8 @@ console.log("dataaaa",res.data)
 
   <div className="neevCsv">
     <Header />
+
+   
      {/* <div>
     <ul className = "headerList">
     <li> <Link to="/csv">Home</Link></li>
@@ -76,10 +308,12 @@ console.log("dataaaa",res.data)
     
     </div> */}
   <Card className="neevCsvCard">
+
+ 
     <Row>
         <Col span={6}>
         <p className="districtNameBox">District Name</p>
-        {onDistrictName}
+        {onDistrictName()}
 {/* <Select
      labelSubName= "District Name"
      placeholder="select"
@@ -100,24 +334,63 @@ console.log("dataaaa",res.data)
         { value: 'Cuttack', label: 'Cuttack' },
       ]}
     /> */}
+
+
+
+
+    
         </Col>
         <Col span={6}>
         <p className="districtNameBox">Block Name</p>
-<Select
-    //   defaultValue="lucy"
+        <select
+      // onChange={(value)=>setDistrictValue(value)
+      onChange ={onBlockChange}
+        
+      defaultValue = ""
+      name ="blockName"
+      >
+<option value = "">Select</option>
+      {blockName.map((item)=>{
+        console.log(item,"1234")
+       return(
+        
+              //  <option value={"hello"}>{"hello"}</option>
+
+       <option value={item}>{item}</option>
+       )
+      })}
+      </select> 
+{/* <Select
+      defaultValue="lucy"
       style={{ width: 120 }}
-    //   onChange={handleChange}
+      onChange={handleChange}
       options={[
         { value: 'Khorda', label: 'Khorda' },
         { value: 'Ganjam', label: 'Ganjam' },
         { value: 'Cuttack', label: 'Cuttack' },
       ]}
-    />
+    /> */}
         </Col>
 
         <Col span={6}>
         <p className="districtNameBox">GP Name</p>
-<Select
+        <select
+      // onChange={(value)=>setDistrictValue(value)
+      onChange ={onGpChange}
+        
+      defaultValue = ""
+      name ="gpName"
+      >
+        <option value = "" >Select</option>
+
+      {gpName.map((item)=>{
+      return(
+       <option value={item}>{item}</option>
+       )
+      })}
+      </select> 
+
+{/* <Select
     //   defaultValue="lucy"
       style={{ width: 120 }}
     //   onChange={handleChange}
@@ -126,33 +399,76 @@ console.log("dataaaa",res.data)
         { value: 'Ganjam', label: 'Ganjam' },
         { value: 'Cuttack', label: 'Cuttack' },
       ]}
-    />
+    /> */}
         </Col>
 
         <Col span={6}>
         <p className="districtNameBox">Cluster Name</p>
-<Select
-    //   defaultValue="lucy"
+
+        <select
+      // onChange={(value)=>setDistrictValue(value)
+      onChange ={onClusterChange}
+        
+      defaultValue = ""
+      name ="clusterName"
+      >
+        <option value = "" >Select</option>
+      {clusterName.map((item)=>{
+      return(
+       <option value={item}>{item}</option>
+       )
+      })}
+      </select> 
+{/* <Select
+      defaultValue="lucy"
       style={{ width: 120 }}
-    //   onChange={handleChange}
+      onChange={handleChange}
       options={[
         { value: 'Khorda', label: 'Khorda' },
         { value: 'Ganjam', label: 'Ganjam' },
         { value: 'Cuttack', label: 'Cuttack' },
       ]}
-    />
+    /> */}
         </Col>
     
     </Row>
 <Row>
 <Col span={24} className="submitBtn">
-        <Button className="submit">Submit</Button>
+        <Button className="submit"
+        onClick = {handleSubmit}
+        >Submit</Button>
 
         </Col>
+
+
+      
 </Row>
 
+     
       </Card>
+      <Card>
+      <Row>
+          <div>
+      
+      <div ref={printRef} className="print-only">
+        {/* <PrintComponent /> */}
+        <p className="clusterValue">{clusterNameValue}</p>
+
+        {imagePrint()}
+      </div>
+      <ReactToPrint
+        trigger={() => <button>Print</button>}
+        content={() => printRef.current}
+      />
+    </div>
+          
+        </Row>
+        </Card>
+
 
   </div>
   )
 }
+
+
+// axios.get({ params: { districtName: {distrciValue}, clusterName: {clusterNameValue} , blockName:{blockNameValue}} })

@@ -7,6 +7,11 @@
 
 }
 
+.clusterValue{
+    text-align: center;
+    font-weight: 800;
+}
+
 .districtNameBox{
     font-family: serif;
     font-size: 16px;
