@@ -70,9 +70,10 @@ public class CSVController {
 	}
 
 	@GetMapping("/csvf/{district}/{block}/{gpName}/{cluster}")
-	public ResponseEntity<Object> getbyDistrictNameandBlock(@PathVariable(value = "district") String district,@PathVariable(value = "district") String block,@PathVariable(value = "district") String gpName,@PathVariable(value = "district") String cluster) throws Exception {
-
+	public ResponseEntity<Object> getbyDistrictNameandBlock(@PathVariable(value = "district") String district,@PathVariable(value = "block") String block,@PathVariable(value = "gpName") String gpName,@PathVariable(value = "cluster") String cluster) throws Exception {
+	System.out.println("74");
 		try {
+			System.out.println(district+"  " + block +" " + " "+cluster);
 			HashMap<String, Object> str = fileService.getAllDataAndBlock(district, block,gpName,cluster);
 			return new ResponseEntity<>(str, HttpStatus.OK);
 

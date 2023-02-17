@@ -36,7 +36,7 @@ public class CSVService {
 	 return s;
   } 
   public HashMap<String, Object> getAllDataAndBlock(String District,String Block,String gpName,String Cluster){
-	 List<CsvUploadModel> s = repository.findUserByStatus(Cluster,gpName,Block,District);
+	 List<CsvUploadModel> s = repository.findByClusterName(Cluster);
      HashMap<String, Object> map = new HashMap<>();
      List<String > str = new ArrayList<>();
      for(int i=0;i<s.size();i++) {
