@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -23,7 +24,8 @@ import com.innobitsystems.neev.model.CsvUploadModel;
 
 public class CSVHelper {
   public static String TYPE = "text/csv";
-  static String[] HEADERs = { "Id", "Title", "Description", "Published" };
+
+  static String[] HEADERs = { "id", "userid", "uploaded_time", "district_name","block_name","gp_name","cluster_name","ward_number","gps_coordinates_of_each_poles","pole_no" ,"light_in_wattage","light_image","reconductoring_start_pole_no","reconductoring_end_pole_no","span_length","landmark"};
 
   public static boolean hasCSVFormat(MultipartFile file) {
 
@@ -40,10 +42,16 @@ public class CSVHelper {
             CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
 
       List<CsvUploadModel> tutorials = new ArrayList<CsvUploadModel>();
+      List<CSVRecord> cs = new ArrayList<CSVRecord>();
+//      for(int i=0;i<cs.size();i++) {
+//    	  syso
+//      }
 
       Iterable<CSVRecord> csvRecords = csvParser.getRecords();
-
+   
       for (CSVRecord csvRecord : csvRecords) {
+  		System.out.println(              csvRecord.get("block_name")+"klllllllllllllllllllllllllll");
+
         CsvUploadModel tutorial = new CsvUploadModel(
         	
 //        		this.id = id;
@@ -62,27 +70,28 @@ public class CSVHelper {
 //        		this.reconductoringEndPoleNo = reconductoringEndPoleNo;
 //        		this.spanLength = spanLength;
 //        		this.landmark = landmark;
-              Long.parseLong(csvRecord.get("Id")),
+        		
+//              Long.parseLong(csvRecord.get("id")),
               csvRecord.get("userid"),
-              csvRecord.get("uploadedtime"),
-              csvRecord.get("districtName"),
-              csvRecord.get("blockName"),
-              csvRecord.get("gpName"),
-              csvRecord.get("clusterName"),
-              csvRecord.get("wardNumber"),
-              csvRecord.get("gpsCordinateOfpole"),
-              csvRecord.get("poleNumber"),
-              csvRecord.get("lightInWattage"),
-              csvRecord.get("lightimage"),
-              csvRecord.get("reconductoringStartPoleNo"),
-              csvRecord.get("reconductoringEndPoleNo"),
-              csvRecord.get("spanLength"),
+              csvRecord.get("uploaded_time"),
+              csvRecord.get("district_name"),
+              csvRecord.get("block_name"),
+              csvRecord.get("gp_name"),
+              csvRecord.get("cluster_name"),
+              csvRecord.get("ward_number"),
+              csvRecord.get("gps_coordinates_of_each_poles"),
+              csvRecord.get("pole_no"),
+              csvRecord.get("light_in_wattage"),
+              csvRecord.get("light_image"),
+              csvRecord.get("reconductoring_start_pole_no"),
+              csvRecord.get("reconductoring_end_pole_no"),
+              csvRecord.get("span_length"),
               csvRecord.get("landmark")
               
 
 
             );
-
+System.out.println(tutorial);
         tutorials.add(tutorial);
       }
 

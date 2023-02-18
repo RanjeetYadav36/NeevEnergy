@@ -24,8 +24,48 @@ public class CSVService {
 
   public void save(MultipartFile file) {
     try {
+    	System.out.println("jlkjlklklk isde save");
       List<CsvUploadModel> tutorials = CSVHelper.csvToTutorials(file.getInputStream());
-      repository.saveAll(tutorials);
+      System.out.println(tutorials.size()+"jlsdkjkajsdkfjaskljfkjs");
+      List<CsvUploadModel> f1 = repository.findAll();
+      if(f1.size()!=0) {
+    	  System.out.println("inside delete all ");
+    	  repository.deleteAllInBatch();
+      }
+      for(int i=0;i<tutorials.size();i++) {
+          CsvUploadModel c = new CsvUploadModel();
+
+//    	  System.out.println(tutorials.get(i));
+    	  c.setBlock(tutorials.get(i).getBlock());
+    	  c.setClusterName(tutorials.get(i).getClusterName());
+    	  c.setDistrictName(tutorials.get(i).getDistrictName());
+    	  c.setGpName(tutorials.get(i).getGpName());
+    	  c.setGpsCordinateOfpole(tutorials.get(i).getGpsCordinateOfpole());
+    	  if(!tutorials.get(i).getLightimage().contains(",")) {
+    	  c.setLightimage(tutorials.get(i).getLightimage());}
+    	  else {
+    		  String str = tutorials.get(i).getLightimage();
+    		  System.out.println(str+"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    		  String splStr[] = str.split(",");
+    		  for(int k=0;k<splStr.length;k++) {
+    			  c.setBlock(tutorials.get(i).getBlock());
+    	    	  c.setClusterName(tutorials.get(i).getClusterName());
+    	    	  c.setDistrictName(tutorials.get(i).getDistrictName());
+    	    	  c.setGpName(tutorials.get(i).getGpName());
+    	    	  c.setGpsCordinateOfpole(tutorials.get(i).getGpsCordinateOfpole());
+    	    	  System.out.println(splStr[k]);
+    	    	  c.setLightimage(splStr[k]);
+    	          repository.save(c);
+    	    	  
+    			  
+    		  }
+    	  }
+    	  c.setLandmark(tutorials.get(i).getLandmark());
+          repository.save(c);
+//System.out.println(i);
+//System.out.println(tutorials.size());
+      }
+      System.out.println("iinside service 31");
     } catch (IOException e) {
       throw new RuntimeException("fail to store csv data: " + e.getMessage());
     }
@@ -36,6 +76,7 @@ public class CSVService {
 	 return s;
   } 
   public HashMap<String, Object> getAllDataAndBlock(String District,String Block,String gpName,String Cluster){
+	  System.out.println(Cluster);
 	 List<CsvUploadModel> s = repository.findByClusterName(Cluster);
      HashMap<String, Object> map = new HashMap<>();
      List<String > str = new ArrayList<>();

@@ -30,7 +30,7 @@ public class CsvUploadModel {
 	}
 
 
-	public CsvUploadModel(Long id, String userid, String uploadedtime, String districtName, String block, String gpName,
+	public CsvUploadModel( String userid, String uploadedtime, String districtName, String block, String gpName,
 			String clusterName, String wardNumber, String gpsCordinateOfpole, String poleNumber, String lightInWattage,
 			String lightimage, String reconductoringStartPoleNo, String reconductoringEndPoleNo, String spanLength,
 			String landmark) {
